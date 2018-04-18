@@ -1,0 +1,2 @@
+className = com.zgh.reflect.Student
+methodName = txtShow

@@ -1,0 +1,29 @@
+HashMap和HashTable的区别一种比较简单的回答是：
+
+（1）HashMap是非线程安全的，HashTable是线程安全的,内部的方法基本都经过synchronized修饰，对对象加锁。
+
+（2）HashMap的键和值都允许有null存在，而HashTable则都不行,直接抛出NullPointerException。
+
+（3）因为线程安全、哈希效率的问题，HashMap效率比HashTable的要高。
+
+（4）HashMap默认初始化数组的大小为16，HashTable为11。前者扩容时乘2，使用位运算取得哈希，
+
+	效率高于取模。而后者为乘2加1，都是素数和奇数，这样取模哈希结果更均匀
+	
+	*哈希表是由数组+链表组成的，一个长度为16的数组中，每个元素存储的是一个链表的头结点，
+	   通过功能类似于hash(key.hashCode())%len的操作，获得要添加的元素所要存放的的数组位置。
+
+	*HashMap的哈希算法实际操作是通过位运算，比取模运算效率更高，同样能达到使其分布均匀的目的
+	
+	*   ConcurrentHashMap是线程安全的HashMap的实现
+	
+	ConcurrentHashMap引入了分割(Segment)，在put方法中，会根据hash(paramK.hashCode())来决定具体存放进哪个Segment，如果查看Segment的put操作，我们会发现内部使用的同步机制是基于lock操作的，这样就可以对Map的一部分（Segment）进行上锁，这样影响的只是将要放入同一个Segment的元素的put操作，
+	保证同步的时候，锁住的不是整个Map
+	
+* HashMap和ConCurrentHashMap的对比
+
+最后对这俩兄弟做个区别总结吧：
+
+（1）经过4.2的分析，我们知道ConcurrentHashMap对整个桶数组进行了分割分段(Segment)，然后在每一个分段上都用lock锁进行保护，相对于HashTable的syn关键字锁的粒度更精细了一些，并发性能更好，而HashMap没有锁机制，不是线程安全的。
+
+（2）HashMap的键值对允许有null，但是ConCurrentHashMap都不允许。

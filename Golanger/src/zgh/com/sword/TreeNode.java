@@ -1,0 +1,8 @@
+package zgh.com.sword;
+
+public class TreeNode {
+	      int val;
+	      TreeNode left;
+	      TreeNode right;
+	      TreeNode(int x) { val = x; }
+}
