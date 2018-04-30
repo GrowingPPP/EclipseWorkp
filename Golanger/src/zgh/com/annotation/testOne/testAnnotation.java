@@ -7,9 +7,9 @@ import java.util.Set;
 public class testAnnotation {
 
 	public static void main(String[] args) throws Exception{
-		String className = "zgh.com.annotation.JavaE";
+		String className = "zgh.com.annotation.testOne.JavaE";
 		Class test = Class.forName(className);
-		
+		//
 		Method[] method = test.getDeclaredMethods();
 		
 		boolean flag = test.isAnnotationPresent(Description.class);
